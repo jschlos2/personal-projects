@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500">
+  <!-- PLACEHOLDER: replace with your real artwork (e.g. detail-02.jpg) and update projects.js -->
+  <defs>
+    <pattern id="c" width="48" height="44" patternUnits="userSpaceOnUse">
+      <rect width="24" height="22" fill="#F5F0E8" opacity=".14"/><rect x="24" y="22" width="24" height="22" fill="#F5F0E8" opacity=".14"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="1500" fill="#3B69B1"/>
+  <rect x="0" y="0" width="96" height="88" fill="url(#c)"/>
+  <rect x="1104" y="1412" width="96" height="88" fill="url(#c)"/>
+  <text x="50%" y="46%" text-anchor="middle" font-family="Teko, Impact, sans-serif" font-size="84" fill="#F5F0E8">Tamagoyaki</text>
+  <text x="50%" y="54%" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="26" letter-spacing="3" fill="#D6FF3F">PLACEHOLDER · STEP ILLUSTRATIONS · 4:5</text>
+</svg>

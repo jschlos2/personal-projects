@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Beyond the Product — Jennifer Robertson</title>
+  <meta name="description" content="Illustrations, invitations and visual experiments by Jennifer Robertson, product and UX designer." />
+  <meta name="theme-color" content="#4E7FCB" />
+
+  <!-- Same typefaces as the Framer portfolio (Teko + Inter), loaded from Google Fonts.
+       If you ever change fonts in Framer, update this link AND the --font-* tokens in styles.css. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Teko:wght@400;600;700&display=swap" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Project data first, then the renderer. Both deferred so they run in order after parsing. -->
+  <script src="projects.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#gallery">Skip to artwork</a>
+
+  <!-- Checkerboard rails: mirrors the edge pattern on the Framer site.
+       Hidden automatically when the page runs inside an iframe (Framer already draws them). -->
+  <div class="rail rail--left" aria-hidden="true"></div>
+  <div class="rail rail--right" aria-hidden="true"></div>
+
+  <div class="page" id="page">
+
+    <!-- ============ HEADER (mirrors the Framer top bar) ============
+         Every link back to the portfolio uses target="_top" so it replaces the whole
+         browser window instead of loading the portfolio inside the iframe. -->
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="wordmark" href="https://jennifer-robertson-ux.framer.website/" target="_top" aria-label="Jennifer Robertson — back to portfolio home">
+          Jennifer Robertson
+        </a>
+        <nav class="site-nav" aria-label="Portfolio">
+          <ul>
+            <li><a href="https://jennifer-robertson-ux.framer.website/#work" target="_top">Work</a></li>
+            <li><a href="https://jennifer-robertson-ux.framer.website/#about" target="_top">About</a></li>
+            <li><a href="https://jennifer-robertson-ux.framer.website/#contact" target="_top">Contact</a></li>
+            <li><a href="https://jennifer-robertson-ux.framer.website/resume" target="_top">Resume</a></li>
+            <li><a href="https://www.linkedin.com/in/jennifercrobertson/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ============ INTRO (understated — matches the "Selected case studies" header) ============ -->
+      <section class="intro" aria-labelledby="intro-title">
+        <div class="intro__heading">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <ol>
+              <li><a href="https://jennifer-robertson-ux.framer.website/" target="_top">Portfolio</a></li>
+              <li aria-current="page">Visual work</li>
+            </ol>
+          </nav>
+          <h1 id="intro-title" class="intro__title">Beyond the Product</h1>
+        </div>
+        <p class="intro__copy">
+          Not everything I make starts with a product problem. This is a collection of illustrations, invitations and visual experiments I’ve made while learning new tools, exploring ideas or simply making something because I wanted to.
+        </p>
+      </section>
+
+      <!-- ============ GALLERY ============
+           Generated from projects.js — do not add artwork here by hand. -->
+      <section class="gallery" id="gallery" aria-label="Artwork" tabindex="-1">
+        <noscript>
+          <p class="gallery__noscript">This gallery needs JavaScript to display the artwork.</p>
+        </noscript>
+      </section>
+
+      <!-- ============ RETURN TO PORTFOLIO ============ -->
+      <section class="return" aria-labelledby="return-title">
+        <div class="return__panel">
+          <div>
+            <p class="kicker">Back to the main work</p>
+            <h2 id="return-title" class="return__title">Product designer first. Visual maker always.</h2>
+          </div>
+          <div class="actions">
+            <a class="btn btn--primary" href="https://jennifer-robertson-ux.framer.website/#work" target="_top">
+              <span class="checker-mark" aria-hidden="true"></span>View case studies
+            </a>
+            <a class="btn btn--secondary" href="mailto:robertsonjenniferc@gmail.com" target="_top">
+              <span class="checker-mark" aria-hidden="true"></span>Let’s talk
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ FOOTER (mirrors the Framer footer bar) ============ -->
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <p class="site-footer__copy">© <span data-year>2026</span> Jennifer Robertson</p>
+        <nav aria-label="Footer">
+          <ul class="site-footer__links">
+            <li><a href="https://jennifer-robertson-ux.framer.website/" target="_top">Home</a></li>
+            <li><a href="https://jennifer-robertson-ux.framer.website/#work" target="_top">Work</a></li>
+            <li><a href="https://jennifer-robertson-ux.framer.website/#about" target="_top">About</a></li>
+            <li><a href="https://jennifer-robertson-ux.framer.website/#contact" target="_top">Contact</a></li>
+            <li><a href="https://jennifer-robertson-ux.framer.website/resume" target="_top">Resume</a></li>
+            <li><a href="https://www.linkedin.com/in/jennifercrobertson/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ============ DETAIL VIEW ============
+       Native <dialog>: gives us Escape-to-close, focus containment and an inert background for free. -->
+  <dialog class="detail" id="detail" aria-labelledby="detail-title">
+    <div class="detail__panel">
+      <div class="detail__bar">
+        <p class="kicker kicker--accent" id="detail-kicker"></p>
+        <button type="button" class="icon-btn" data-close aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="detail__body">
+        <div class="detail__media" id="detail-media"></div>
+        <aside class="detail__info">
+          <h2 class="detail__title" id="detail-title"></h2>
+          <p class="detail__desc" id="detail-desc"></p>
+          <dl class="detail__meta" id="detail-meta"></dl>
+          <p class="detail__link" id="detail-link" hidden></p>
+          <div class="detail__pager">
+            <button type="button" class="pager-btn" data-prev><span aria-hidden="true">←</span> <span class="pager-btn__label">Previous</span></button>
+            <button type="button" class="pager-btn" data-next><span class="pager-btn__label">Next</span> <span aria-hidden="true">→</span></button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>

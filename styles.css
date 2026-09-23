@@ -1,0 +1,890 @@
+/* =====================================================================
+   BEYOND THE PRODUCT — styles
+   Visual system mirrored from https://jennifer-robertson-ux.framer.website
+   (values measured from the live Framer page at 1440px).
+
+   ➜ All brand values live in :root below. If something drifts from Framer,
+     change it here — nothing else in this file hard-codes colors or fonts.
+   ===================================================================== */
+
+:root {
+  /* ---------- COLOR (from Framer) ---------- */
+  --color-bg: #4e7fcb;                         /* page blue */
+  --color-surface: rgba(35, 70, 125, 0.38);    /* project card panel */
+  --color-surface-strong: #2b4f84;             /* secondary button / deep blue */
+  --color-surface-faint: rgba(245, 240, 232, 0.04); /* about/capability shell */
+  --color-text: #f5f0e8;                       /* headings + links (warm off-white) */
+  --color-text-muted: rgba(255, 255, 255, 0.86);
+      /* Framer body copy uses 0.76. Nudged to 0.86 here for readability on the blue.
+         Set back to 0.76 for an exact match. */
+  --color-accent: #d6ff3f;                     /* lime — project meta / kickers */
+  --color-accent-soft: #769bd2;                /* light blue — primary button text, checker tiles */
+  --color-white: #ffffff;
+  --color-line: rgba(245, 240, 232, 0.24);     /* hairlines */
+  --color-overlay: rgba(17, 17, 15, 0.72);     /* modal backdrop (from Framer dark tiles) */
+  --color-focus: var(--color-accent);
+
+  /* ---------- TYPOGRAPHY ----------
+     Framer uses Teko (display) + Inter (text); both load from Google Fonts in index.html.
+     ➜ REPLACE HERE if the portfolio fonts ever change. */
+  --font-display: "Teko", "Oswald", "Arial Narrow", sans-serif;
+  --font-text: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --fs-wordmark: 48px;     /* "JENNIFER ROBERTSON" — Teko 400 */
+  --fs-h1: 56px;           /* page title — understated (Framer section H2 is 48px) */
+  --fs-h2: 48px;           /* Teko 400 */
+  --fs-h3: 34px;           /* project titles — Teko 600 */
+  --fs-body: 17px;         /* Inter 400 */
+  --fs-small: 15px;
+  --fs-nav: 14px;          /* Inter 600 */
+  --fs-footer: 13px;
+  --fs-kicker: 12px;       /* Inter 700 uppercase, 0.12em tracking */
+  --fs-button: 13px;       /* Inter 800 uppercase */
+
+  --lh-display: 1;
+  --lh-body: 1.55;
+  --ls-display: -0.01em;
+  --ls-kicker: 0.12em;
+  --ls-button: 0.04em;
+
+  /* ---------- LAYOUT ---------- */
+  --frame-max: 1240px;     /* Framer section width */
+  --frame-pad: 76px;       /* Framer section side padding → 1088px content */
+  --content-max: 1088px;
+  --rail-width: 40px;      /* checkerboard edge */
+  --rail-tile-w: 20px;
+  --rail-tile-h: 18px;
+
+  /* ---------- SPACING ---------- */
+  --space-2xs: 8px;
+  --space-xs: 12px;
+  --space-s: 20px;
+  --space-m: 28px;
+  --space-l: 48px;
+  --space-xl: 72px;
+  --space-2xl: 96px;
+  --gutter: 32px;          /* grid gap (Framer project grid) */
+  --row-gap: 112px;        /* space between gallery rows */
+  --stagger: 120px;        /* vertical offset for asymmetric pairs */
+
+  /* ---------- RADIUS ---------- */
+  --radius-media: 22px;    /* Framer artwork (panels, placeholders) */
+  --radius-art: 6px;       /* finished artwork — kept small so framed/printed pieces aren't clipped */
+  --radius-card: 28px;     /* Framer project card */
+  --radius-shell: 32px;    /* Framer large panels */
+  --radius-pill: 999px;
+
+  /* ---------- MOTION ---------- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 180ms;
+  --dur: 320ms;
+  --dur-slow: 600ms;
+}
+
+/* ---------- Tablet (Framer breakpoint ≈ 810–1199) ---------- */
+@media (max-width: 1199px) {
+  :root {
+    --frame-pad: 48px;
+    --fs-wordmark: 40px;
+    --fs-h1: 48px;
+    --fs-h2: 40px;
+    --fs-h3: 30px;
+    --rail-width: 24px;
+    --rail-tile-w: 12px;
+    --rail-tile-h: 11px;
+    --row-gap: 88px;
+    --stagger: 64px;
+    --gutter: 24px;
+  }
+}
+
+/* ---------- Mobile (< 810) ---------- */
+@media (max-width: 809px) {
+  :root {
+    --frame-pad: 20px;
+    --fs-wordmark: 34px;
+    --fs-h1: 44px;
+    --fs-h2: 34px;
+    --fs-h3: 28px;
+    --fs-body: 16px;
+    --rail-width: 10px;
+    --rail-tile-w: 10px;
+    --rail-tile-h: 10px;
+    --row-gap: 56px;
+    --stagger: 0px;
+    --gutter: 20px;
+    --radius-media: 16px;
+    --radius-card: 22px;
+  }
+}
+
+/* =====================================================================
+   BASE
+   ===================================================================== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--color-bg);
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-text);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;         /* belt-and-braces against horizontal scroll inside iframes */
+  position: relative;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+button { font: inherit; color: inherit; }
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--frame-pad);
+  top: -100px;
+  z-index: 20;
+  padding: 10px 16px;
+  background: var(--color-white);
+  color: var(--color-surface-strong);
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+}
+.skip-link:focus { top: 12px; }
+
+/* =====================================================================
+   CHECKERBOARD RAILS (Framer "Left/Right Double Checkerboard")
+   ===================================================================== */
+.rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--rail-width);
+  pointer-events: none;
+  background-color: var(--color-white);
+  background-image: conic-gradient(
+    var(--color-bg) 0 25%, var(--color-white) 0 50%,
+    var(--color-bg) 0 75%, var(--color-white) 0
+  );
+  background-size: calc(var(--rail-tile-w) * 2) calc(var(--rail-tile-h) * 2);
+}
+.rail--left { left: 0; }
+.rail--right { right: 0; transform: scaleX(-1); }
+
+/* Inside the Framer iframe the host page already has rails */
+.is-embedded .rail { display: none; }
+
+/* =====================================================================
+   PAGE FRAME
+   ===================================================================== */
+.page {
+  width: 100%;
+  max-width: var(--frame-max);
+  margin: 0 auto;
+  /* keep content clear of the checkerboard rails */
+  padding-inline: max(var(--frame-pad), calc(var(--rail-width) + 16px));
+}
+.is-embedded .page { padding-inline: var(--frame-pad); }
+
+.site-header,
+main,
+.site-footer {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+/* =====================================================================
+   HEADER — mirrors Framer "Top Bar"
+   ===================================================================== */
+.site-header { padding-top: var(--space-xl); }
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  min-height: 48px;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: var(--fs-wordmark);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+  color: var(--color-text);
+  padding-top: 0.08em;           /* Teko sits high; optically centers with nav */
+  white-space: nowrap;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.wordmark:hover { opacity: 0.82; }
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+}
+
+.site-nav a,
+.site-footer__links a {
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-text);
+  letter-spacing: 0;
+  position: relative;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.site-nav a { font-size: var(--fs-nav); }
+
+.site-nav a::after,
+.site-footer__links a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -5px;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease);
+}
+.site-nav a:hover::after,
+.site-footer__links a:hover::after { transform: scaleX(1); }
+
+@media (max-width: 809px) {
+  .site-header { padding-top: var(--space-l); }
+  .site-header__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-s);
+  }
+  .wordmark { white-space: normal; max-width: 100%; overflow-wrap: anywhere; }
+  .site-nav ul { gap: 12px 22px; }
+  .site-nav a { font-size: 15px; display: inline-block; padding-block: 4px; }
+}
+
+/* =====================================================================
+   SHARED TYPE
+   ===================================================================== */
+.kicker {
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+.kicker--accent { color: var(--color-accent); }
+
+/* =====================================================================
+   INTRO — mirrors Framer "Work Header"
+   ===================================================================== */
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--space-m) var(--space-l);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.breadcrumb li + li::before {
+  content: "/";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.breadcrumb a { color: var(--color-white); opacity: 0.76; transition: opacity var(--dur-fast); }
+.breadcrumb a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
+.breadcrumb [aria-current] { color: var(--color-white); }
+
+.intro__title {
+  margin-top: var(--space-s);
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 400;
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  color: var(--color-text);
+}
+
+.intro__copy {
+  color: var(--color-text-muted);
+  max-width: 44ch;
+  justify-self: end;
+}
+
+@media (max-width: 809px) {
+  .intro {
+    grid-template-columns: 1fr;
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-l);
+  }
+  .intro__copy { justify-self: start; }
+}
+
+/* =====================================================================
+   GALLERY — editorial rows generated by script.js
+   ===================================================================== */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--row-gap);
+  padding-block: var(--space-2xl) var(--space-2xl);
+}
+.gallery:focus { outline: none; }
+
+.gallery__noscript { color: var(--color-text-muted); }
+
+/* ----- a single piece ----- */
+.work {
+  position: relative;
+  min-width: 0;
+}
+
+.work__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-art);
+  background: var(--color-surface);
+  aspect-ratio: var(--ar, 4 / 5);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.work__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.001);
+  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+}
+.work__media img.is-loaded { opacity: 1; }
+
+.work__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: var(--space-s);
+}
+
+.work__meta {
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  letter-spacing: var(--ls-kicker);
+  line-height: 1.35;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  opacity: 0.85;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.work__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  color: var(--color-text);
+}
+
+.work__desc {
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  max-width: 46ch;
+  opacity: 0.9;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.work__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--color-text);
+  opacity: 0.7;
+  transition: opacity var(--dur-fast) var(--ease), gap var(--dur) var(--ease);
+}
+
+/* The open button stretches over the whole piece (image + caption) → one tab stop */
+.work__open {
+  all: unset;
+  cursor: pointer;
+}
+.work__open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: var(--radius-art);
+}
+.work__open:focus-visible::after {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 8px;
+}
+
+/* ----- restrained hover (pointer devices only) ----- */
+@media (hover: hover) and (pointer: fine) {
+  .work.is-interactive:hover .work__media { transform: translateY(-4px); }
+  .work.is-interactive:hover .work__media img.is-loaded { transform: scale(1.025); }
+  .work.is-interactive:hover .work__meta,
+  .work.is-interactive:hover .work__desc,
+  .work.is-interactive:hover .work__more { opacity: 1; }
+  .work.is-interactive:hover .work__more { gap: 12px; }
+}
+
+/* ----- ROW: feature (one large piece + caption beside it) ----- */
+.row--feature .work {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  align-items: stretch;
+}
+.row--feature .work__media { grid-column: 1 / span var(--span, 7); grid-row: 1; align-self: start; }
+
+/* Caption column starts under a hairline level with the top of the artwork */
+.row--feature .work__caption {
+  grid-column: calc(var(--span, 7) + 2) / -1;
+  grid-row: 1;
+  align-self: start;
+  padding-top: var(--space-s);
+  padding-bottom: 0;
+  border-top: 1px solid var(--color-line);
+}
+.row--feature .work__title { font-size: calc(var(--fs-h3) * 1.25); }
+.row--feature .work__desc { font-size: var(--fs-body); }
+
+/* mirrored feature: artwork on the right */
+.row--feature.is-flipped .work__media { grid-column: calc(13 - var(--span, 7)) / -1; }
+.row--feature.is-flipped .work__caption { grid-column: 1 / span calc(11 - var(--span, 7)); text-align: left; }
+
+/* width of the artwork by orientation — tall and portrait pieces land at similar heights */
+.row--feature .work[data-orientation="landscape"] { --span: 8; }
+.row--feature .work[data-orientation="square"] { --span: 7; }
+.row--feature .work[data-orientation="portrait"] { --span: 7; }
+.row--feature .work[data-orientation="tall"] { --span: 6; }
+
+/* ----- ROW: pair (two pieces sized to share a height) -----
+   Tops align by default. The stagger only kicks in when the two pieces have
+   clearly different shapes (e.g. a portrait next to a landscape), where the
+   offset reads as intentional instead of misaligned. */
+.row--pair {
+  display: grid;
+  grid-template-columns: var(--cols, 1fr 1fr);
+  column-gap: calc(var(--gutter) * 1.5);
+  align-items: start;
+}
+.row--pair.is-staggered .work:nth-child(2) { margin-top: var(--stagger); }
+.row--pair.is-inset { padding-left: calc(100% / 12); }
+.row--pair.is-inset-right { padding-right: calc(100% / 12); }
+.row--pair .work__caption { padding-top: var(--space-s); border-top: 0; }
+
+/* ----- ROW: full ----- */
+.row--full .work__caption {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  column-gap: var(--space-l);
+  align-items: start;
+}
+.row--full .work__caption > :nth-child(n + 3) { grid-column: 2; }
+.row--full .work__caption .work__title { grid-column: 1; }
+
+/* ----- Tablet ----- */
+@media (max-width: 1199px) {
+  .row--feature .work[data-orientation="portrait"],
+  .row--feature .work[data-orientation="square"],
+  .row--feature .work[data-orientation="tall"] { --span: 7; }
+  .row--feature .work[data-orientation="landscape"] { --span: 12; }
+  .row--feature .work[data-orientation="landscape"] .work__caption {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: var(--space-s);
+  }
+  .row--pair { column-gap: var(--gutter); }
+  .row--pair.is-inset,
+  .row--pair.is-inset-right { padding-inline: 0; }
+}
+
+/* ----- Mobile: single column, full-width artwork ----- */
+@media (max-width: 809px) {
+  .row--feature .work,
+  .row--pair,
+  .row--full .work__caption { display: block; }
+  .gallery { padding-block: var(--space-l) var(--space-xl); }
+  .row--pair > .work + .work { margin-top: var(--row-gap); }
+  .row--feature .work__caption { padding-top: var(--space-s); padding-bottom: 0; border-top: 0; }
+  .row--feature .work__title { font-size: var(--fs-h3); }
+  .row--feature .work__desc { font-size: var(--fs-small); }
+  .work__caption { gap: 8px; }
+}
+
+/* =====================================================================
+   BUTTONS — mirrors Framer "Primary" / "Secondary"
+   ===================================================================== */
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 40px;
+  padding: 12px 18px 12px 14px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-button);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: var(--ls-button);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btn--primary { background: var(--color-white); color: var(--color-accent-soft); }
+.btn--secondary {
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  box-shadow: inset 0 0 0 1.5px var(--color-text);
+}
+
+/* 2×2 checker glyph used inside Framer buttons */
+.checker-mark {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+.btn--primary .checker-mark {
+  background: conic-gradient(
+    var(--color-bg) 0 25%, var(--color-accent-soft) 0 50%, var(--color-bg) 0 75%, var(--color-accent-soft) 0
+  );
+}
+.btn--secondary .checker-mark {
+  background: conic-gradient(
+    var(--color-accent-soft) 0 25%, var(--color-white) 0 50%, var(--color-accent-soft) 0 75%, var(--color-white) 0
+  );
+}
+
+/* =====================================================================
+   RETURN PANEL
+   ===================================================================== */
+.return { padding-bottom: var(--space-2xl); }
+
+.return__panel {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-m) var(--space-l);
+  padding: var(--space-l);
+  border-radius: var(--radius-shell);
+  background: var(--color-surface);
+}
+
+.return__title {
+  margin-top: var(--space-xs);
+  max-width: 18ch;
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+}
+
+@media (max-width: 809px) {
+  .return { padding-bottom: var(--space-xl); }
+  .return__panel { padding: var(--space-m) var(--space-s); }
+}
+
+/* =====================================================================
+   FOOTER — mirrors Framer "Contact Footer"
+   ===================================================================== */
+.site-footer { padding-bottom: var(--space-xl); }
+
+.site-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-s) var(--space-m);
+  padding-top: 22px;
+  border-top: 1px solid var(--color-line);
+}
+
+.site-footer__copy {
+  font-size: var(--fs-footer);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+}
+.site-footer__links a { font-size: var(--fs-footer); }
+
+@media (max-width: 809px) {
+  .site-footer { padding-bottom: var(--space-l); }
+  .site-footer__inner { flex-direction: column-reverse; align-items: flex-start; }
+  .site-footer__links { gap: 14px 22px; }
+  .site-footer__links a { display: inline-block; padding-block: 4px; font-size: 14px; }
+}
+
+/* =====================================================================
+   DETAIL VIEW (dialog)
+   ===================================================================== */
+.detail {
+  /* the dialog is the full-screen click-outside area; the panel is the card */
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: clamp(12px, 3vw, 40px);
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.detail::backdrop {
+  background: var(--color-overlay);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.detail[open] { display: flex; align-items: flex-start; justify-content: center; }
+
+.detail__panel {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  margin: auto;
+  padding: var(--space-m);
+  border-radius: var(--radius-shell);
+  background: var(--color-bg);
+  box-shadow: 0 30px 80px rgba(17, 17, 15, 0.35);
+}
+
+.detail__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  margin-bottom: var(--space-s);
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.icon-btn:hover { background: var(--color-white); color: var(--color-surface-strong); }
+
+.detail__body {
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+  gap: var(--space-l);
+  align-items: start;
+}
+
+.detail__media { display: grid; gap: var(--gutter); }
+
+.detail__hero,
+.detail__thumb {
+  margin: 0;
+  border-radius: var(--radius-art);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+.detail__hero img,
+.detail__thumb img { width: 100%; height: 100%; object-fit: contain; }
+
+.detail__hero {
+  aspect-ratio: var(--ar, auto);
+  max-height: var(--media-max-h, 82vh);
+  width: auto;
+  max-width: 100%;
+  justify-self: center;
+}
+
+.detail__supporting {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+  align-items: start;
+}
+.detail__supporting.is-single { grid-template-columns: 1fr; }
+.detail__thumb { aspect-ratio: var(--ar, auto); }
+.detail__thumb figcaption {
+  padding: 10px 4px 0;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+
+.detail__info {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  padding-top: var(--space-xs);
+}
+
+.detail__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+}
+
+.detail__desc { color: var(--color-text-muted); }
+
+.detail__meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 20px;
+  padding-top: var(--space-s);
+  border-top: 1px solid var(--color-line);
+  font-size: var(--fs-small);
+}
+.detail__meta dt {
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--color-white);
+  opacity: 0.76;
+  padding-top: 3px;
+}
+.detail__meta dd { color: var(--color-text); }
+
+.detail__link a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+.detail__link a:hover { color: var(--color-accent); }
+
+.detail__pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: var(--space-s);
+  padding-top: var(--space-s);
+  border-top: 1px solid var(--color-line);
+}
+
+.pager-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font-size: var(--fs-button);
+  font-weight: 800;
+  letter-spacing: var(--ls-button);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.pager-btn:hover { background: var(--color-surface-strong); }
+.pager-btn[hidden] { display: none; }
+
+/* Open/close animation */
+.detail[open] .detail__panel { animation: panel-in var(--dur) var(--ease); }
+.detail[open]::backdrop { animation: fade-in var(--dur) var(--ease); }
+@keyframes panel-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Embedded + auto-height iframe: the "viewport" is the whole page, so the
+   panel is anchored next to the piece that was clicked (set by script.js). */
+.detail.is-anchored { overflow: visible; }
+.detail.is-anchored[open] { align-items: flex-start; }
+.detail.is-anchored .detail__panel { margin: var(--anchor-top, 24px) auto 24px; }
+.detail.is-anchored .detail__info { position: static; }
+
+@media (max-width: 1199px) {
+  .detail__body { grid-template-columns: 1fr; gap: var(--space-m); }
+  .detail__info { position: static; }
+}
+@media (max-width: 809px) {
+  .detail { padding: 8px; }
+  .detail__panel { padding: var(--space-s) 14px; border-radius: var(--radius-card); }
+  .detail__supporting { grid-template-columns: 1fr; }
+  .pager-btn__label { display: none; }
+}
+
+/* Lock page scroll while the dialog is open (standalone only) */
+html.is-locked { overflow: hidden; }
+
+/* =====================================================================
+   REDUCED MOTION
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+  .work.is-interactive:hover .work__media,
+  .work.is-interactive:hover .work__media img.is-loaded,
+  .btn:hover { transform: none !important; }
+}
