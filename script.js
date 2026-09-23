@@ -391,10 +391,39 @@
   }
 
   /* ---------------------------------------------------------------
+     6b. LINKS BACK TO THE PORTFOLIO FROM INSIDE AN IFRAME
+     target="_top" works in a normal iframe, but Framer (and its preview)
+     can sandbox embeds so the iframe isn't allowed to navigate the page.
+     When the Framer code component is hosting us, it says hello; after that
+     we ask IT to navigate (it lives on the Framer page, so it's allowed).
+     --------------------------------------------------------------- */
+  function setupPortfolioLinks() {
+    if (!embedded || window.parent === window) return;
+    let hostCanNavigate = false;
+
+    window.addEventListener("message", (e) => {
+      if (e.source !== window.parent || !e.data) return;
+      const t = e.data.type;
+      if (t === "beyond-the-product:hello" || t === "beyond-the-product:request-height") hostCanNavigate = true;
+    });
+
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest && e.target.closest('a[target="_top"]');
+      if (!a || !hostCanNavigate) return;
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const href = a.href;
+      if (!/^https?:/i.test(href)) return; // leave mailto: etc. alone
+      e.preventDefault();
+      window.parent.postMessage({ type: "beyond-the-product:navigate", url: href }, "*");
+    });
+  }
+
+  /* ---------------------------------------------------------------
      7. INIT
      --------------------------------------------------------------- */
   renderGallery();
   setupHeightReporting();
+  setupPortfolioLinks();
 
   // Deep link: /#neon-tetra opens that piece (standalone only)
   const hash = decodeURIComponent(location.hash.slice(1));
