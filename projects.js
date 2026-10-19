@@ -37,7 +37,6 @@
    IMAGE TIPS
      • Export JPG/WebP around 1600px on the long edge for covers (~200–400 KB).
      • Optional smaller 800px version for coverSrcset keeps mobile fast.
-     • ⚠ Lines marked PLACEHOLDER still point to stand-in .svg files — swap them for your real artwork.
    ===================================================================== */
 
 const projects = [
@@ -103,27 +102,16 @@ const projects = [
 
   {
     id: "tamagoyaki-recipe",
-    hidden: true,                                                     // ← work in progress — delete this line to publish
     title: "Tamagoyaki Recipe Illustration",
     category: "Illustration + editorial design",
     year: "",
     description:
       "A printable illustrated recipe influenced by 1980s home cooking books, Japanese food illustration and kitschy retro print design.",
-    coverImage: "assets/work/tamagoyaki-recipe/cover.svg",            // ← PLACEHOLDER
-    aspectRatio: "17 / 22",
-    alt: "Printable illustrated tamagoyaki recipe page in a retro 1980s cookbook style. [Replace]",
-    images: [
-      {
-        src: "assets/work/tamagoyaki-recipe/detail-01.svg",           // ← PLACEHOLDER
-        alt: "Detail of the illustrated rolled omelet. [Replace]",
-        aspectRatio: "1 / 1",
-      },
-      {
-        src: "assets/work/tamagoyaki-recipe/detail-02.svg",           // ← PLACEHOLDER
-        alt: "Step-by-step illustrations from the recipe. [Replace]",
-        aspectRatio: "4 / 5",
-      },
-    ],
+    coverImage: "assets/work/tamagoyaki-recipe/cover-1600.jpg",
+    coverSrcset: "assets/work/tamagoyaki-recipe/cover-800.jpg 800w, assets/work/tamagoyaki-recipe/cover-1600.jpg 1600w",
+    aspectRatio: "11 / 14",
+    alt: "Cream recipe card titled “Classic Tamagoyaki, Japanese rolled omelette recipe” in chunky retro serif lettering. Sliced rolled omelette sits on a white oval plate over a blue gingham cloth, above an illustrated ingredients row (eggs, sugar, salt, soy sauce, water) and four numbered steps: mix gently, heat and oil the pan, pour and roll, and shape in a bamboo mat.",
+    images: [],
     url: "",
   },
 
